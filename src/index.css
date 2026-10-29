@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/* ---------- Averta font ---------- */
+@font-face {
+  font-family: "Averta";
+  src: url("./assets/fonts/Averta_Cyrillic_Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta";
+  src: url("./assets/fonts/Averta_Cyrillic_Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta";
+  src: url("./assets/fonts/Averta_Cyrillic_SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Averta";
+  src: url("./assets/fonts/Averta_Cyrillic_Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Theme: cyber red / Batman ----------
+   Dark is the default. To re-colour the whole site later, edit the
+   accent / crimson / signal values below (and their light + force-dark twins). */
+@theme {
+  /* Near-black with a faint red tint */
+  --color-obsidian: #060506;
+  --color-surface: #0d0a0b;
+  --color-surface-highlight: #161012;
+  --color-border-subtle: #2a1a1d;
+  --color-ink: #ffffff;
+
+  /* accent = neon red (main brand colour) */
+  --color-accent-300: #ff9aa4;
+  --color-accent-400: #ff4d5e;
+  --color-accent-500: #ff2a3d;
+  --color-accent-600: #e11d2e;
+  --color-accent-950: #3a0a0f;
+
+  /* crimson = deeper red / rose (secondary) */
+  --color-crimson-300: #fda4af;
+  --color-crimson-400: #fb7185;
+  --color-crimson-600: #be123c;
+  --color-crimson-950: #4c0519;
+
+  /* signal = Batman-signal amber (highlight) */
+  --color-signal-300: #fde68a;
+  --color-signal-400: #fbbf24;
+  --color-signal-500: #f59e0b;
+  --color-signal-600: #d97706;
+  --color-signal-950: #451a03;
+
+  /* Neutral greys for text (replaces Tailwind's blue-tinted slate) */
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #d4d4d4;
+  --color-slate-400: #a3a3a3;
+  --color-slate-500: #737373;
+  --color-slate-600: #525252;
+
+  --font-sans: "Averta", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Averta", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  color-scheme: dark;
+  --grid-line: rgba(255, 255, 255, 0.02);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Light theme: same names, different values ---------- */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-obsidian: #faf7f7;
+  --color-surface: #ffffff;
+  --color-surface-highlight: #f4eeee;
+  --color-border-subtle: #e6dcdc;
+  --color-ink: #140c0d;
+  --grid-line: rgba(20, 12, 13, 0.05);
+  --glass-shadow: 0 8px 32px rgba(20, 12, 13, 0.08);
+
+  --color-slate-200: #262626;
+  --color-slate-300: #404040;
+  --color-slate-400: #525252;
+  --color-slate-500: #737373;
+  --color-slate-600: #a3a3a3;
+
+  /* Accent text darkened for contrast on light backgrounds */
+  --color-accent-300: #c4161c;
+  --color-accent-400: #c4161c;
+  --color-crimson-300: #9f1239;
+  --color-crimson-400: #9f1239;
+  --color-signal-300: #b45309;
+  --color-signal-400: #b45309;
+  --color-emerald-300: #047857;
+  --color-emerald-400: #047857;
+}
+
+/* ---------- Parts that stay dark in both modes (code window, banners) ---------- */
+.force-dark {
+  color-scheme: dark;
+  --color-obsidian: #060506;
+  --color-surface: #0d0a0b;
+  --color-surface-highlight: #161012;
+  --color-border-subtle: #2a1a1d;
+  --color-ink: #ffffff;
+  --grid-line: rgba(255, 255, 255, 0.02);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --color-slate-200: #e5e5e5;
+  --color-slate-300: #d4d4d4;
+  --color-slate-400: #a3a3a3;
+  --color-slate-500: #737373;
+
+  --color-accent-300: #ff9aa4;
+  --color-accent-400: #ff4d5e;
+  --color-crimson-300: #fda4af;
+  --color-crimson-400: #fb7185;
+  --color-signal-300: #fde68a;
+  --color-signal-400: #fbbf24;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-padding-top: 5rem;
+}
+
+html,
+body {
+  font-family: "Averta", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-obsidian);
+  color: var(--color-ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-obsidian);
+}
+
+/* ---------- Effects ---------- */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-ink);
+  transition: color 0.3s ease;
+}
+
+.text-outline:hover {
+  color: var(--color-ink);
+}
+
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+}
+
+.glow-accent {
+  box-shadow: 0 0 60px -15px rgba(255, 42, 61, 0.28);
+}
+
+/* Glass panel (no backdrop blur, so scrolling stays smooth) */
+.glass {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-surface) 70%, transparent),
+    color-mix(in srgb, var(--color-surface) 45%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  border-radius: 1.5rem;
+  box-shadow:
+    var(--glass-shadow),
+    inset 0 1px 0 color-mix(in srgb, var(--color-ink) 10%, transparent);
+}
