@@ -6,7 +6,7 @@
 // JSON file (for example in a GitHub repo), paste its "raw" URL below,
 // and the site will load it on every visit. Leave "" to use this file.
 // ---------------------------------------------------------------
-export const REMOTE_DATA_URL = "";
+export const REMOTE_DATA_URL = "https://raw.githubusercontent.com/Adnanibrahim43/portfolio-data/refs/heads/main/dashboard.json";
 
 export const GITHUB_USERNAME = "Adnanibrahim43";
 
