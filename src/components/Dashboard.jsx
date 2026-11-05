@@ -3,7 +3,6 @@ import {
   FaCircleCheck,
   FaHammer,
   FaRocket,
-  FaCertificate,
   FaBriefcase,
   FaHandshake,
   FaHourglassHalf,
@@ -127,12 +126,6 @@ function Dashboard() {
     { icon: FaCircleCheck, value: projectCount("built", "deployed"), label: "Projects built", iconClass: "text-accent-400" },
     { icon: FaHammer, value: projectCount("building"), label: "Building now", iconClass: "text-signal-400" },
     { icon: FaRocket, value: projectCount("deployed"), label: "Deployed", iconClass: "text-emerald-400" },
-    {
-      icon: FaCertificate,
-      value: data.certifications.filter((cert) => cert.status === "earned").length,
-      label: "Certifications",
-      iconClass: "text-crimson-400",
-    },
     { icon: FaBriefcase, value: data.internships.length, label: "Internships", iconClass: "text-accent-400" },
     { icon: FaHandshake, value: data.gigs.length, label: "Freelance gigs", iconClass: "text-signal-400" },
     { icon: FaHourglassHalf, value: data.waitlist.count, label: "Orders waitlist", iconClass: "text-crimson-400" },
@@ -217,18 +210,8 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Certifications, internships, gigs */}
-        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-          <Panel title="Certifications" icon={FaCertificate} iconClass="text-crimson-400">
-            <Rows
-              rows={data.certifications.map((cert) => ({
-                title: cert.title,
-                subtitle: `${cert.issuer} - ${cert.year}`,
-                status: cert.status,
-              }))}
-            />
-          </Panel>
-
+        {/* Internships, gigs */}
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           <Panel title="Internships" icon={FaBriefcase} iconClass="text-accent-400">
             <Rows
               rows={data.internships.map((job) => ({

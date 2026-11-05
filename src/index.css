@@ -165,6 +165,27 @@ body {
   color: var(--color-ink);
 }
 
+/* Fix: without this, selecting .text-outline text shows a solid
+   block instead of readable letters. The stroke/fill combo above
+   doesn't repaint correctly under the default ::selection rule, so
+   give it an explicit override. */
+.text-outline::selection {
+  color: var(--color-obsidian);
+  -webkit-text-fill-color: var(--color-obsidian);
+  -webkit-text-stroke-color: var(--color-obsidian);
+  background-color: var(--color-ink);
+}
+
+/* Hide scrollbar visually while keeping the element scrollable (mouse drag,
+   trackpad, touch and arrow keys all still work). */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, newer Edge */
+}
+
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image:

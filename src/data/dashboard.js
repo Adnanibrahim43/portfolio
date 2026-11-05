@@ -21,12 +21,6 @@ export const localData = {
     { name: "ProjectDNA Knowledge Platform", note: "Corrective-RAG + knowledge graph", status: "built" },
   ],
 
-  // status: "earned" | "in progress"
-  certifications: [
-    { title: "Prompt Engineering for ChatGPT", issuer: "DeepLearning.AI", year: "2025", status: "earned" },
-    { title: "Machine Learning Specialization", issuer: "Vodafone Idea Foundation", year: "2024", status: "earned" },
-  ],
-
   // status: "active" | "completed"
   internships: [
     { role: "AI/ML Software Engineer Intern", company: "Kingscote Informatics", period: "Aug 2025 - Jan 2026", status: "completed" },

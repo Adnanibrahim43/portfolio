@@ -1,4 +1,6 @@
-import { FaGraduationCap, FaCertificate } from "react-icons/fa6";
+import { useEffect, useRef } from "react";
+import { FaGraduationCap, FaCertificate, FaArrowUpRightFromSquare } from "react-icons/fa6";
+import certifications from "../data/certifications.json";
 
 // Draft text, written only from what's already on the site. Edit it to sound like you.
 const paragraphs = [
@@ -15,26 +17,43 @@ const facts = [
 
 const education = {
   degree: "B.Tech in Computer Science Engineering",
-  school: "Shadan College of Engineering & Technology",
+  school: "Shadan College of Engineering & Technology - JNTUH",
   period: "11/2021 - 07/2025",
   coursework:
     "Coursework: Machine Learning, Deep Learning, Data Structures & Algorithms, Database Management Systems, Statistics & Probability, Linear Algebra.",
 };
 
-const certifications = [
-  {
-    title: "Prompt Engineering for ChatGPT",
-    issuer: "DeepLearning.AI (Andrew Ng)",
-    year: "2025",
-  },
-  {
-    title: "Machine Learning Specialization",
-    issuer: "Vodafone Idea Foundation",
-    year: "2024",
-  },
-];
-
 function About() {
+  const certsRef = useRef(null);
+
+  // Let a normal vertical mouse-wheel scroll the certifications row
+  // horizontally while the cursor is over it, instead of scrolling the page.
+  // This has to be a native, non-passive listener: React's onWheel is
+  // registered as passive, so event.preventDefault() inside it is ignored
+  // and the page scrolls vertically at the same time.
+  useEffect(() => {
+    const el = certsRef.current;
+    if (!el) return;
+
+    const handleWheel = (event) => {
+      // If the user is scrolling mostly horizontally already (trackpad),
+      // let the browser handle it natively.
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+      const { scrollLeft, scrollWidth, clientWidth } = el;
+      const atStart = scrollLeft <= 0 && event.deltaY < 0;
+      const atEnd = scrollLeft + clientWidth >= scrollWidth && event.deltaY > 0;
+      // At the edges, let the event bubble so the page can keep scrolling.
+      if (atStart || atEnd) return;
+
+      event.preventDefault();
+      el.scrollLeft += event.deltaY;
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
     <section id="about" className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="glass mx-auto max-w-7xl p-6 sm:p-10">
@@ -79,44 +98,79 @@ function About() {
           </div>
         </div>
 
-        {/* Education + certifications */}
-        <div className="mt-16 grid grid-cols-1 gap-12 border-t border-border-subtle pt-16 md:grid-cols-2">
-          <div>
-            <h3 className="mb-6 flex items-center space-x-2 text-xl font-bold text-ink">
-              <FaGraduationCap className="text-accent-400" />
-              <span>Education</span>
-            </h3>
-            <div className="space-y-2 rounded-2xl border border-border-subtle bg-surface p-6">
-              <div className="flex items-start justify-between gap-4">
-                <h4 className="text-base font-semibold text-ink">{education.degree}</h4>
-                <span className="shrink-0 font-mono text-xs text-accent-400">
-                  {education.period}
-                </span>
-              </div>
-              <div className="text-sm text-accent-300">{education.school}</div>
-              <p className="pt-2 text-xs text-slate-400">{education.coursework}</p>
+        {/* Education */}
+        <div className="mt-16 border-t border-border-subtle pt-16">
+          <h3 className="mb-6 flex items-center space-x-2 text-xl font-bold text-ink">
+            <FaGraduationCap className="text-accent-400" />
+            <span>Education</span>
+          </h3>
+          <div className="space-y-2 rounded-2xl border border-border-subtle bg-surface p-6">
+            <div className="flex items-start justify-between gap-4">
+              <h4 className="text-base font-semibold text-ink">{education.degree}</h4>
+              <span className="shrink-0 font-mono text-xs text-accent-400">
+                {education.period}
+              </span>
             </div>
+            <div className="text-sm text-accent-300">{education.school}</div>
+            <p className="pt-2 text-xs text-slate-400">{education.coursework}</p>
           </div>
+        </div>
 
-          <div>
-            <h3 className="mb-6 flex items-center space-x-2 text-xl font-bold text-ink">
-              <FaCertificate className="text-crimson-400" />
-              <span>Certifications</span>
-            </h3>
-            <div className="space-y-4">
-              {certifications.map((cert) => (
-                <div
-                  key={cert.title}
-                  className="flex items-center justify-between rounded-xl border border-border-subtle bg-surface p-4"
-                >
-                  <div>
-                    <h4 className="text-sm font-semibold text-ink">{cert.title}</h4>
-                    <span className="text-xs text-slate-400">{cert.issuer}</span>
+        {/* Certifications */}
+        <div className="mt-10">
+          <h3 className="mb-6 flex items-center space-x-2 text-xl font-bold text-ink">
+            <FaCertificate className="text-crimson-400" />
+            <span>Certifications</span>
+          </h3>
+          <div
+            ref={certsRef}
+            className="scrollbar-hide flex gap-3 overflow-x-auto scroll-smooth pb-2"
+          >
+            {certifications.map((cert) => {
+              const content = (
+                <>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[10px] tracking-wide text-slate-500 uppercase">
+                      {cert.issuer}
+                    </span>
+                    <span className="shrink-0 font-mono text-[10px] text-accent-400">
+                      {cert.year}
+                    </span>
                   </div>
-                  <span className="font-mono text-xs text-accent-400">{cert.year}</span>
+
+                  <h4 className="mt-2 line-clamp-2 text-sm leading-snug font-semibold text-ink">
+                    {cert.title}
+                  </h4>
+
+                  <div className="mt-3 flex items-center justify-between border-t border-border-subtle pt-2">
+                    <span className="text-[11px] text-slate-500">Certificate</span>
+                    {cert.url && (
+                      <FaArrowUpRightFromSquare className="text-[9px] text-slate-600" />
+                    )}
+                  </div>
+                </>
+              );
+
+              const cardClass =
+                "flex h-[150px] w-[260px] shrink-0 flex-col justify-between rounded-xl border border-border-subtle bg-surface p-4 transition-colors";
+
+              return cert.url ? (
+                <a
+                  key={cert.title}
+                  href={cert.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={cert.title}
+                  className={`${cardClass} hover:border-accent-500/40 hover:bg-surface-highlight`}
+                >
+                  {content}
+                </a>
+              ) : (
+                <div key={cert.title} title={cert.title} className={cardClass}>
+                  {content}
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

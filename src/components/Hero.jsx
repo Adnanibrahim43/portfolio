@@ -20,7 +20,7 @@ function Hero() {
               <span>ML Engineer // Hyderabad, India</span>
             </div>
 
-            <h1 className="font-display text-5xl leading-none font-medium tracking-tighter text-ink sm:text-7xl">
+            <h1 className="font-display text-5xl leading-[1.2] font-medium tracking-tighter text-ink sm:text-7xl">
               Architecting <span className="text-outline">Autonomous</span> AI & Intelligent Systems
             </h1>
 

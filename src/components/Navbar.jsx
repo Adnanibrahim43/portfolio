@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FaBars, FaXmark, FaDownload } from "react-icons/fa6";
 import ThemeToggle from "./ThemeToggle";
 import Magnet from "./Magnet";
+import logo from "../assets/logo.png";
+
 
 // Put your PDF in the "public" folder with this exact name
 const RESUME_URL = "/Ibrahim_Khan_Resume.pdf";
@@ -37,19 +39,21 @@ function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border-subtle bg-obsidian/80 backdrop-blur-xl transition-all">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Magnet><a href="#" className="group flex items-center space-x-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-600 font-mono text-xs font-bold tracking-tight text-white shadow-md transition-transform group-hover:scale-105">
-            IK
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold tracking-wide text-ink">
-              ibrahimbuilds.space
-            </span>
-            <span className="font-mono text-[10px] text-accent-400">
-              AI Systems Core
-            </span>
-          </div>
-        </a></Magnet>
+        <Magnet>
+          <a href="#" className="group flex items-center space-x-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg shadow-md transition-transform group-hover:scale-105">
+              <img src={logo} alt="" className="h-6 w-6 object-contain" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-wide text-ink">
+                Ibrahim Khan
+              </span>
+              <span className="font-mono text-[10px] text-accent-400">
+                AI Systems Core
+              </span>
+            </div>
+          </a>
+        </Magnet>
 
         {/* Desktop nav links */}
         <nav className="hidden items-center space-x-1 text-sm font-medium text-slate-400 lg:flex">
